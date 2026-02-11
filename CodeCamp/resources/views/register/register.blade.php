@@ -21,8 +21,20 @@
                             </label>
                         </div>
 
-                        <input type="password" name="password" class="w-full p-3 text-orange-600! font-semibold! border-2 border-orange-200 rounded-xl outline-none focus:border-orange-500 transition-colors" placeholder="Password" required/>
-                    </div>
+                        <div class="group">
+                            <div class="relative flex items-center border-2 border-orange-200 rounded-xl overflow-hidden focus-within:border-orange-500 transition-colors">
+                                <span class="px-4 text-orange-400 group-focus-within:text-orange-500"><i class="fa-solid fa-lock"></i></span>
+                                
+                                <input type="password" name="password" id="registerPassword" 
+                                    class="w-full py-3 pr-12 outline-none text-orange-700 bg-transparent" 
+                                    placeholder="Password" required/>
+                                
+                                <button type="button" onclick="togglePassword('registerPassword', 'registerIcon')" 
+                                        class="absolute right-0 top-0 h-full px-4 text-orange-400 hover:text-orange-600 focus:outline-none z-10">
+                                    <i id="registerIcon" class="fa-solid fa-eye-slash"></i>
+                                </button>
+                            </div>
+                        </div>
 
                     <label class="flex! items-center! text-xs text-orange-500 cursor-pointer pt-1! pb-1!">
                         <input type="checkbox" id="terms" required class="mr-2! rounded border-orange-300 text-orange-600 focus:ring-orange-500">
@@ -39,3 +51,21 @@
                     Already registered? <button class="text-orange-600 font-bold hover:underline" id="showLoginLink">Log in</button>
                 </p>
             </div>
+
+
+            <script>
+                function togglePassword(inputId, iconId) {
+    const passwordInput = document.getElementById(inputId);
+    const icon = document.getElementById(iconId);
+
+    if (passwordInput.type === 'password') {
+        passwordInput.type = 'text';
+        icon.classList.remove('fa-eye-slash');
+        icon.classList.add('fa-eye');
+    } else {
+        passwordInput.type = 'password';
+        icon.classList.remove('fa-eye');
+        icon.classList.add('fa-eye-slash');
+    }
+}
+            </script>9
