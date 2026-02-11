@@ -19,7 +19,19 @@
             </button>
         </div>
 
-        <form id="forgotPasswordForm" action="forgot_password_process.php" method="POST" class="mt-8 space-y-6">
+@if($errors->any())
+    <div class="bg-red-50 border-l-4 border-red-400 p-4 mb-4">
+        <p class="text-sm text-red-700">{{ $errors->first() }}</p>
+    </div>
+@endif
+
+@if(session('status'))
+    <div class="bg-green-50 border-l-4 border-green-400 p-4 mb-4">
+        <p class="text-sm text-green-700">{{ session('status') }}</p>
+    </div>
+@endif
+
+        <form id="forgotPasswordForm" action="{{ route('password.email') }}" method="POST" class="mt-8 space-y-6">
             @csrf
             <input type="hidden" name="contactMethod" id="contactMethod" value="email">
 
@@ -49,7 +61,7 @@
 
             <div>
                 <button type="submit" class="w-full bg-gradient-to-r from-orange-400/80 via-orange-500/90 to-orange-400/80
- hover:bg-orange-700 text-white font-bold py-4 rounded-xl! transition-all shadow-sm shadow-orange-500/30 active:scale-[0.98]">
+                    hover:bg-orange-700 text-white font-bold py-4 rounded-xl! transition-all shadow-sm shadow-orange-500/30 active:scale-[0.98]">
                     Send Verification Code
                 </button>
             </div>
