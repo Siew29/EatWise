@@ -1,5 +1,19 @@
 @extends('layouts.app')
-
+@if (session('success_logout'))
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        Swal.fire({
+            icon: 'success',
+            title: 'Logged Out',
+            text: '{{ session("success_logout") }}',
+            showConfirmButton: false,
+            timer: 2500,
+            timerProgressBar: true,
+            iconColor: '#10b981', // Green color
+        });
+    });
+</script>
+@endif
 @section('content')
 
 <!--HERO-->
@@ -189,7 +203,67 @@ document.addEventListener('DOMContentLoaded', function() {
             document.body.style.overflow = 'hidden';
         }
     }
+
+    const desktopToken = document.getElementById('desktopLoginToken')?.value;
+
+    if (desktopToken) {
+
+        const checkStatusInterval = setInterval(async () => {
+            const currentToken = document.getElementById('desktopLoginToken')?.value;
+            
+            if (!currentToken) return;
+
+            try {
+                const response = await fetch(`/check-qr-status/${currentToken}`);
+                const data = await response.json();
+
+                if (data.authenticated) {
+                    clearInterval(checkStatusInterval);
+                    
+                    // Close modal and redirect
+                    const authModal = document.getElementById('authModal');
+                    if (authModal) {
+                        authModal.classList.add('hidden');
+                        authModal.classList.remove('flex');
+                    }
+
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Login Successful!',
+                        timer: 1500,
+                        showConfirmButton: false
+                    }).then(() => {
+                        window.location.assign('/');
+                    });
+                }
+            } catch (error) {
+                console.error('QR Check Error:', error);
+            }
+        }, 3000);
+            }
 });
 
+async function refreshQr() {
+    const refreshBtn = event.currentTarget;
+    const svgWrapper = document.getElementById('qrSvgWrapper');
+    const tokenInput = document.getElementById('desktopLoginToken');
+
+    refreshBtn.classList.add('animate-pulse');
+    svgWrapper.style.opacity = '0.5';
+
+    try {
+        const response = await fetch('/refresh-qr');
+        const data = await response.json();
+
+        if (data.token && data.svg) {
+            document.getElementById('desktopLoginToken').value = data.token; 
+            document.getElementById('qrSvgWrapper').innerHTML = data.svg;
+        }
+    } catch (error) {
+        console.error('Refresh failed', error);
+    } finally {
+        refreshBtn.classList.remove('animate-pulse');
+    }
+}
 </script>
 @endsection
