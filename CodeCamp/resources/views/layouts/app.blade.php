@@ -7,6 +7,7 @@
     
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
 </head>
 <body class="bg-gray-50">
@@ -14,7 +15,7 @@
 <!--NAVBAR -->
 <nav class="sticky lg:static top-0 z-50 w-full bg-orange-50/95 backdrop-blur-md shadow-sm">
     <div class="w-full lg:container mx-auto px-4 h-16 flex items-center justify-between">
-    
+
         <!--LOGO-->
         <a href="{{ url('/') }}" class="flex items-center shrink-0 no-underline!">
             <img src="{{ asset('image/Logo.png') }}" alt="EatWise Logo" class="h-6 w-auto object-contain">
@@ -26,18 +27,34 @@
             <a href="{{ route('about') }}" class="text-sm font-semibold text-gray-500! no-underline! hover:text-gray-800! transition-colors">About Us</a>
             <a href="{{ route('services') }}" class="text-sm font-semibold text-gray-500! no-underline! hover:text-gray-800! transition-colors">Services</a>
             
-            @guest
+           @guest
                 <button id="loginBtn">
                     <a class="text-sm font-semibold text-orange-500! no-underline! hover:text-orange-700! transition-colors">Login</a>
                 </button>
+           @else
+                <a href="{{ route('profile') }}" class="flex items-center group no-underline!">
+                    <div class="w-9 h-9 rounded-full bg-orange-100 flex items-center justify-center border border-orange-200 group-hover:bg-orange-400 transition-all duration-300">
+                        <i class="fas fa-user text-orange-500 group-hover:text-white text-sm"></i>
+                    </div>
+                    <span class="ml-2 text-sm font-semibold text-gray-500! group-hover:text-gray-800! transition-colors">
+                        {{ auth()->user()->UserName }}
+                    </span>
+                </a>
+
+                <form action="{{ route('logout') }}" method="POST" class="inline">
+                    @csrf
+                    <button type="submit" class="text-sm font-semibold text-gray-400! hover:text-orange-700! transition-colors ml-4">
+                        Logout
+                    </button>
+                </form>
             @endguest
-        </div>
+                    </div>
 
         <!--BURGER BUTTON-->
-        <button id="mobile-menu-button" class="lg:hidden text-orange-400! hover:bg-white/20 rounded-lg transition-colors">
-            <i class="fas fa-bars text-xl"></i>
-        </button>
-    </div>
+            <button id="mobile-menu-button" class="lg:hidden text-orange-400! hover:bg-white/20 rounded-lg transition-colors">
+                <i class="fas fa-bars text-xl"></i>
+            </button>
+        </div>
 
     <!-- MOBILE MENU -->
     <div id="mobile-menu" class="lg:hidden overflow-hidden max-h-0 opacity-0 transition-all duration-400 ease-in-out bg-orange-50">
@@ -64,11 +81,23 @@
             </a>
 
             @guest
-                <button id="loginBtn" class="w-full odd:bg-orange-100 even:bg-orange-50">
+                <button id="loginBtnMobile" class="w-full odd:bg-orange-100 even:bg-orange-50">
                     <a class="flex px-4 py-3 md:text-sm text-xs font-semibold text-orange-500! no-underline! hover:text-orange-700! transition-colors">
-                            Login
+                        Login
                     </a>
                 </button>
+            @else
+                <a href="{{ route('profile') }}" class="flex items-center px-4 py-3 md:text-sm text-xs font-semibold text-gray-500! no-underline! hover:text-gray-800! transition-colors odd:bg-orange-100 even:bg-orange-50">
+                    <i class="fas fa-user-circle mr-3 text-orange-500 text-lg"></i>
+                    My Profile ({{ auth()->user()->UserName }})
+                </a>
+
+                <form action="{{ route('logout') }}" method="POST" class="w-full odd:bg-orange-100 even:bg-orange-50">
+                    @csrf
+                    <button type="submit" class="flex w-full px-4 py-3 md:text-sm text-xs font-semibold text-gray-500! hover:text-orange-700! transition-colors">
+                        <i class="fas fa-sign-out-alt mr-3"></i> Logout
+                    </button>
+                </form>
             @endguest
         </div>
     </div>
