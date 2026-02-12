@@ -53,12 +53,29 @@
                         </div>
                     </div>
 
-                    <div id="qrFields" class="hidden text-center py-2">
-                        <div class="inline-block p-4 bg-white border-2 border-dashed border-orange-200 rounded-2xl shadow-inner">
-                            <img id="qrLoginImage" src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=example" alt="QR Code" class="w-48 h-48">
-                        </div>
-                        <button type="button" class="block mx-auto mt-4 text-orange-600 text-sm font-bold hover:underline">Refresh QR Code</button>
-                    </div>
+                    <div id="qrFields" class="hidden text-center py-4 w-full">
+    <div class="flex flex-col items-center justify-center">
+        <div class="p-4 bg-white border-2 border-dashed border-orange-200 rounded-2xl shadow-inner inline-block">
+            @if(isset($loginToken))
+                <div id="qrSvgWrapper" class="w-40 h-40 md:w-48 md:h-48 flex items-center justify-center mx-auto">
+                    {{-- This generates the SVG directly into your HTML --}}
+                    {!! QrCode::size(180)->generate(url('/qr-login/' . $loginToken)) !!}
+                </div>
+            @else
+                <div class="w-40 h-40 flex items-center justify-center text-red-400 text-xs">
+                    Token missing. Refresh page.
+                </div>
+            @endif
+        </div>
+        <p class="mt-4 text-sm text-gray-500 px-4">Scan this with your logged-in phone to sign in.</p>
+        
+        <input type="hidden" id="desktopLoginToken" value="{{ $loginToken ?? '' }}">
+        
+        <button type="button" onclick="refreshQr()" class="mt-4 text-orange-600 text-sm font-bold hover:underline">
+            <i class="fa-solid fa-rotate-right mr-1"></i> Refresh QR Code
+        </button>
+    </div>
+</div>
 
                     <button type="submit" class="w-full bg-gradient-to-r from-orange-400/80 via-orange-500/90 to-orange-400/80
  hover:bg-orange-700 text-white font-bold py-4 rounded-xl! transition-all shadow-sm shadow-orange-500/30 active:scale-[0.98]">
