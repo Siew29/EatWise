@@ -88,15 +88,17 @@ function toggleMethod(method) {
     if (method === 'email') {
         emailGroup.classList.remove('hidden');
         phoneGroup.classList.add('hidden');
-        btnEmail.classList.add('bg-white', 'text-blue-600', 'shadow-sm');
-        btnPhone.classList.remove('bg-white', 'text-blue-600', 'shadow-sm');
-        btnPhone.classList.add('text-gray-500');
+        // Set to Orange Theme
+        btnEmail.classList.add('bg-white', 'text-orange-600', 'shadow-sm');
+        btnPhone.classList.remove('bg-white', 'text-orange-600', 'shadow-sm');
+        btnPhone.classList.add('text-orange-400');
     } else {
         phoneGroup.classList.remove('hidden');
         emailGroup.classList.add('hidden');
-        btnPhone.classList.add('bg-white', 'text-blue-600', 'shadow-sm');
-        btnEmail.classList.remove('bg-white', 'text-blue-600', 'shadow-sm');
-        btnEmail.classList.add('text-gray-500');
+        // Set to Orange Theme
+        btnPhone.classList.add('bg-white', 'text-orange-600', 'shadow-sm');
+        btnEmail.classList.remove('bg-white', 'text-orange-600', 'shadow-sm');
+        btnEmail.classList.add('text-orange-400');
     }
 }
 </script>

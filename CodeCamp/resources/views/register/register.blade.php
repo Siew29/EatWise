@@ -59,13 +59,15 @@
     const icon = document.getElementById(iconId);
 
     if (passwordInput.type === 'password') {
+        // Make password visible, show the "Open Eye"
         passwordInput.type = 'text';
         icon.classList.remove('fa-eye-slash');
         icon.classList.add('fa-eye');
     } else {
+        // Hide password, show the "Slashed Eye" (default)
         passwordInput.type = 'password';
         icon.classList.remove('fa-eye');
         icon.classList.add('fa-eye-slash');
     }
 }
-            </script>9
+            </script>

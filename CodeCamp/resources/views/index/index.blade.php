@@ -17,8 +17,8 @@
 @section('content')
 
 <!--HERO-->
-<div id="carouselExampleFade" class="relative h-[500px] lg:h-[800px]! overflow-hidden bg-gray-900">
-    <div class="absolute inset-0 z-10 bg-white/10"></div>
+<div id="carouselExampleFade" class="relative h-[500px] lg:h-[800px]! bg-gray-900">
+    <div class="absolute inset-0 z-10! bg-white/10"></div>
     <img src="{{ asset('image/Carousel_01.jpg') }}" class="absolute inset-0 w-full h-full object-cover" alt="Product Classification" />
     
     <div class="relative z-20 flex items-center justify-center h-full px-4">
